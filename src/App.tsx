@@ -1,88 +1,77 @@
+type Item = {
+  name: string
+  price: string
+}
+
 type Section = {
   title: string
-  items: string[]
+  items: Item[]
 }
+
+const featured: Item[] = [
+  { name: "Cappuccino", price: "950" },
+  { name: "Iced Caramel Macchiato", price: "1300" },
+  { name: "Mocha", price: "1150" }
+]
 
 const menu: Section[] = [
   {
-    title: "Coffee (Hot)",
+    title: "Hot Coffee",
     items: [
-      "Cappuccino",
-      "Flat White",
-      "Café Latte",
-      "Café Mocha",
-      "Caramel Latte",
-      "Americano",
-      "Espresso",
-      "Espresso Double",
-      "Hot Chocolate"
+      { name: "Cappuccino", price: "950" },
+      { name: "Flat White", price: "975" },
+      { name: "Café Latte", price: "950" },
+      { name: "Café Mocha", price: "1150" },
+      { name: "Caramel Latte", price: "1100" },
+      { name: "Americano", price: "900" },
+      { name: "Espresso", price: "700" },
+      { name: "Espresso Double", price: "750" },
+      { name: "Hot Chocolate", price: "1000" }
     ]
   },
   {
-    title: "Coffee (Cold)",
+    title: "Cold Coffee",
     items: [
-      "Iced Americano",
-      "Iced Chocolate",
-      "Iced Caramel Macchiato",
-      "Iced Mocha",
-      "Iced Latte"
+      { name: "Iced Americano", price: "950" },
+      { name: "Iced Chocolate", price: "1200" },
+      { name: "Iced Caramel Macchiato", price: "1300" },
+      { name: "Iced Mocha", price: "1350" },
+      { name: "Iced Latte", price: "1200" }
     ]
   },
   {
-    title: "Milk Shakes",
-    items: ["Chocolate Shake", "Oreo Shake"]
-  },
-  {
-    title: "Mojitos & Sodas",
+    title: "Add-ons",
     items: [
-      "Virgin Mojito",
-      "Passion Mojito",
-      "Lime Soda (Sprite, Mint, Lime)"
+      { name: "Extra Shot", price: "250" },
+      { name: "Almond Milk", price: "300" },
+      { name: "Oat Milk", price: "300" },
+      { name: "Whipped Cream", price: "200" },
+      { name: "Flavoured Syrup", price: "200" }
     ]
-  },
-  {
-    title: "Frappes",
-    items: [
-      "Mocha Frappe",
-      "Espresso Frappe",
-      "Chocolate Crème Frappe"
-    ]
-  },
-  {
-    title: "Fresh Juices",
-    items: [
-      "Mango Juice",
-      "Passion Fruit Juice",
-      "Watermelon Juice"
-    ]
-  },
-  {
-    title: "Healthy Drinks",
-    items: ["Red Antioxidant", "Detox Drink"]
   }
 ]
+
+function ItemRow({ item }: { item: Item }) {
+  return (
+    <div className="flex items-baseline">
+      <span className="text-gray-800">{item.name}</span>
+      <span className="flex-1 border-b border-dotted border-gray-300 mx-3 translate-y-[-3px]" />
+      <span className="text-sm text-gray-600 font-medium">
+        Rs {item.price}
+      </span>
+    </div>
+  )
+}
 
 function SectionBlock({ title, items }: Section) {
   return (
     <div className="mb-14">
-      {/* Section Title */}
-      <h2 className="text-2xl font-light tracking-widest text-amber-900 mb-6 uppercase">
+      <h2 className="text-xl tracking-widest uppercase text-amber-900 mb-5">
         {title}
       </h2>
-
-      {/* Items */}
-      <div className="space-y-4">
-        {items.map((item, index) => (
-          <div key={index} className="flex items-baseline">
-            
-            <span className="text-gray-800 text-lg">{item}</span>
-
-            {/* Elegant flowing line */}
-            <span className="flex-1 border-b border-dotted border-gray-300 mx-4 translate-y-[-4px]"></span>
-
-            {/* price placeholder */}
-            <span className="text-gray-400 text-sm">—</span>
-          </div>
+      <div className="space-y-3">
+        {items.map((item, i) => (
+          <ItemRow key={i} item={item} />
         ))}
       </div>
     </div>
@@ -91,44 +80,66 @@ function SectionBlock({ title, items }: Section) {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#fdfaf6] text-gray-900">
+    <div className="bg-[#fdfaf6] min-h-screen">
 
-      {/* Layout */}
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      {/* HERO */}
+      <div className="relative h-[60vh] flex items-center justify-center text-center">
+        
+        <img
+          src="https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
-        {/* Header */}
-        <div className="mb-20">
-          <h1 className="text-6xl font-extralight tracking-wide text-amber-900">
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        <div className="relative z-10 text-white">
+          <h1 className="text-6xl font-light tracking-wide">
             Cafe Davinci
           </h1>
-
-          <p className="mt-4 text-gray-500 max-w-md leading-relaxed">
-            A curated selection of handcrafted beverages, designed to slow
-            your day and elevate your senses.
+          <p className="mt-4 text-sm tracking-widest">
+            ARTISAN COFFEE EXPERIENCE
           </p>
+        </div>
+      </div>
 
-          <div className="w-24 h-[1px] bg-amber-400 mt-6"></div>
+      {/* CONTENT */}
+      <div className="max-w-6xl mx-auto px-6 py-16">
+
+        {/* FEATURED */}
+        <div className="mb-20">
+          <h2 className="text-2xl text-amber-900 mb-6">
+            Signature Picks
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {featured.map((item, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
+              >
+                <p className="text-lg font-medium">{item.name}</p>
+                <p className="text-amber-700 mt-2">Rs {item.price}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Two Column Layout */}
+        {/* MENU LAYOUT */}
         <div className="grid md:grid-cols-2 gap-16">
 
-          {/* Left Column */}
+          {/* LEFT */}
           <div>
             <SectionBlock {...menu[0]} />
-            <SectionBlock {...menu[2]} />
-            <SectionBlock {...menu[4]} />
-            <SectionBlock {...menu[6]} />
           </div>
 
-          {/* Right Column */}
-          <div className="md:mt-24">
+          {/* RIGHT */}
+          <div className="md:mt-20">
             <SectionBlock {...menu[1]} />
-            <SectionBlock {...menu[3]} />
-            <SectionBlock {...menu[5]} />
+            <SectionBlock {...menu[2]} />
           </div>
 
         </div>
+
       </div>
     </div>
   )
